@@ -1,0 +1,123 @@
+<header>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span>Control Products Application</span>
+      <!-- This fills the remaining space of the current row -->
+      <span class="example-fill-remaining-space"></span>
+
+      <span>Cerrar Sesion</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <button mat-button [matMenuTriggerFor]="menuproducto">Reporte de Productos</button>
+  <mat-menu #menuproducto="matMenu">
+    <button mat-menu-item>Inventario en Almacen de Entrada</button>
+    <button mat-menu-item>Inventario en Almacen de Salida</button>
+    <button mat-menu-item>Inventario total</button>
+  </mat-menu>
+  <button mat-button [matMenuTriggerFor]="menuentrada">Reporte de Entradas</button>
+  <mat-menu #menuentrada="matMenu">
+    <button mat-menu-item>Listar Todas las Entradas</button>
+    <button mat-menu-item>Listar Entradas por rango de Fechas</button>
+  </mat-menu>
+  <button mat-button [matMenuTriggerFor]="menusalida">Reporte de Salidas para Ventas</button>
+  <mat-menu #menusalida="matMenu">
+    <button mat-menu-item>Listar Todas las Salidas</button>
+    <button mat-menu-item>Listar Salidas por rango de Fechas</button>
+  </mat-menu>
+  <button mat-button [matMenuTriggerFor]="menuventa">Reporte de Ventas</button>
+  <mat-menu #menuventa="matMenu">
+    <button mat-menu-item>Listar Todas las Ventas</button>
+    <button mat-menu-item>Listar Ventas por rango de Fechas</button>
+  </mat-menu>
+  <button mat-button [matMenuTriggerFor]="menucierre">Reporte de Cierres</button>
+  <mat-menu #menucierre="matMenu">
+    <button mat-menu-item>Ver Cierre por Fecha</button>
+  </mat-menu>
+  <button mat-button [matMenuTriggerFor]="menugasto">Reporte de Gastos</button>
+  <mat-menu #menugasto="matMenu">
+    <button mat-menu-item>Listar Todos los Gastos</button>
+    <button mat-menu-item>Ver Gastos por Fecha</button>
+  </mat-menu>
+  <button mat-button [matMenuTriggerFor]="menuutil">Reportes Utiles</button>
+  <mat-menu #menuutil="matMenu">
+    <button mat-menu-item>Consolidado</button>
+    <button mat-menu-item>Comision</button>
+    <button mat-menu-item>Utilidades</button>
+  </mat-menu>
+
+</header>
+<section>
+  <mat-sidenav-container>
+    <mat-sidenav mode="over" [(opened)]="opened" >
+      Gestionar Datos
+      <mat-nav-list>
+        <mat-list-item >
+          <a matLine [routerLink]="['/home']">Inicio</a>
+          <button mat-icon-button >
+             <mat-icon>info</mat-icon>
+          </button>
+       </mat-list-item>
+        <mat-list-item >
+           <a matLine [routerLink]="['/product']">Entrar Productos</a>
+           <button mat-icon-button >
+              <mat-icon>info</mat-icon>
+           </button>
+        </mat-list-item>
+        <mat-list-item >
+          <a matLine href="...">Salidas para Ventas</a>
+          <button mat-icon-button >
+             <mat-icon>info</mat-icon>
+          </button>
+       </mat-list-item>
+       <mat-list-item >
+        <a matLine href="...">Vender Productos</a>
+        <button mat-icon-button >
+           <mat-icon>info</mat-icon>
+        </button>
+       </mat-list-item>
+       <mat-list-item >
+        <a matLine href="...">Cierre Diario</a>
+        <button mat-icon-button >
+           <mat-icon>info</mat-icon>
+        </button>
+       </mat-list-item>
+       <mat-list-item >
+        <a matLine href="...">Otros Gastos</a>
+        <button mat-icon-button >
+           <mat-icon>info</mat-icon>
+        </button>
+       </mat-list-item>
+       <mat-list-item >
+        <a matLine href="...">Trabajadores</a>
+        <button mat-icon-button >
+           <mat-icon>info</mat-icon>
+        </button>
+       </mat-list-item>
+       <mat-list-item >
+        <a matLine href="...">Unidades de Medidas</a>
+        <button mat-icon-button >
+           <mat-icon>info</mat-icon>
+        </button>
+       </mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>  
+    <mat-sidenav-content>
+      <div class="">
+            <button (click)="opened=!opened" mat-mini-fab color="primary" aria-label="Example icon button with a menu icon" >
+              <mat-icon>menu</mat-icon>
+            </button>
+      </div>
+      <div class="maincontent">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  
+  
+  
+</section>
+<footer>
+  <mat-divider></mat-divider>
+  &copy; Aplicacion para el Control de Productos<mat-divider></mat-divider>
+  Adrian Dario Gonzalez Mena (dariogm1986@gmail.com)
+</footer>

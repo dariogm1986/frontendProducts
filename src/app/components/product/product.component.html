@@ -1,0 +1,131 @@
+<mat-tab-group>
+    <mat-tab label="Lista"> 
+        Content 1 
+    </mat-tab>
+    <mat-tab label="Insertar">
+        <div class="contenttab">
+            <h3 class="h3">Entrar Producto</h3>
+            <form #productForm="ngForm" (ngSubmit)="agregarProducto()" class="example-form">
+                <mat-form-field class="">
+                    <mat-label>Fecha Entrada</mat-label>
+                    <input matInput [matDatepicker]="picker3" [value]="date.value">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                </mat-form-field>
+                                        
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                        <td>
+                            <mat-form-field class="corto">
+                                <mat-label>Codigo</mat-label>
+                                <input type="text" [(ngModel)]="producto.codigo" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl"
+                                    [matAutocomplete]="auto" required>
+                                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                        {{option}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>                            
+                        </td>
+                        <td>
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Descripcion</mat-label>
+                                <input matInput id="newAttributeDesc" [(ngModel)]="producto.descripcion" name="newAttributeDesc" placeholder="Ex. kg" required>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="mediano">                                
+                                <mat-label>Unidad Medida</mat-label>
+                                <mat-select name="unidad_medida" [(ngModel)]="producto.unidad_medida" required>
+                                    <mat-option *ngFor="let food of foods" [value]="food.viewValue" >
+                                        {{food.viewValue}}
+                                    </mat-option>
+                                </mat-select>                                
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="corto">
+                                <mat-label>Cantidad</mat-label>
+                                <input matInput id="newAttributeCant" [(ngModel)]="producto.cantidad" name="newAttributeCant" placeholder="Ex. 0.00" required>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="corto">
+                                <mat-label>Precio</mat-label>
+                                <input matInput id="newAttributePrecio" [(ngModel)]="producto.precio" name="newAttributePrecio" placeholder="Ex. 0.00" value="" required>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <button type="submit" [disabled]="productForm.invalid" mat-mini-fab color="primary" aria-label="Example icon button with a add icon">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+                
+            </form>
+        </div>
+        <h3 class="h3">Lista de Productos a Entrar</h3>
+        <div class="example-container mat-elevation-z8">
+            {{productos}}
+            <mat-table #table [dataSource]="transactions" myTable class="table">
+              <!-- codigo Column -->
+              <ng-container matColumnDef="codigo">
+                <th mat-header-cell *matHeaderCellDef> Codigo </th>
+                <td mat-cell *matCellDef="let transaction"> {{transaction.codigo}} </td>
+                <td mat-footer-cell *matFooterCellDef> Total </td>
+              </ng-container>
+              <!-- Descripcion Column -->
+              <ng-container matColumnDef="descripcion">
+                <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+                <td mat-cell *matCellDef="let transaction"> {{transaction.descripcion}} </td>
+                <td mat-footer-cell *matFooterCellDef>  </td>
+              </ng-container>
+              <!-- unidad medida Column -->
+              <ng-container matColumnDef="unidad_medida">
+                <th mat-header-cell *matHeaderCellDef> Unidad Medida </th>
+                <td mat-cell *matCellDef="let transaction"> {{transaction.unidad_medida}} </td>
+                <td mat-footer-cell *matFooterCellDef>  </td>
+              </ng-container>
+              <!-- Cantidad Column -->
+              <ng-container matColumnDef="cantidad">
+                <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+                <td mat-cell *matCellDef="let transaction"> {{transaction.cantidad}} </td>
+                <td mat-footer-cell *matFooterCellDef>  </td>
+              </ng-container>
+              <!-- Cost Column -->
+              <ng-container matColumnDef="cost">
+                <th mat-header-cell *matHeaderCellDef> Precio </th>
+                <td mat-cell *matCellDef="let transaction"> {{transaction.precio | currency}} </td>
+                <td mat-footer-cell *matFooterCellDef>  </td>
+              </ng-container>
+              <!-- Importe Column -->
+              <ng-container matColumnDef="importe">
+                <th mat-header-cell *matHeaderCellDef> Importe </th>
+                <td mat-cell *matCellDef="let transaction"> {{transaction.importe | currency}} </td>
+                <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}} </td>
+              </ng-container>
+              <!-- Accion Column -->
+              <ng-container matColumnDef="accion">
+                <th mat-header-cell *matHeaderCellDef> Accion </th>
+                <td mat-cell *matCellDef="let j = index;"> 
+                    <button (click)="eliminarFila(j)" aria-label="Example icon button with a delete icon">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+              </ng-container>
+          
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
+            </mat-table>
+        </div>
+        <div>
+            <button mat-raised-button color="primary">Guardar</button>
+        </div>  
+                            
+    </mat-tab>
+</mat-tab-group>
+
+  
