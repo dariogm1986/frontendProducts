@@ -4,13 +4,22 @@
     </mat-tab>
     <mat-tab label="Insertar">
         <div class="contenttab">
-            <h3 class="h3">Entrar Producto</h3>
+            <h3 class="h3">Venta de Productos</h3>
             <form #productForm="ngForm" (ngSubmit)="agregarProducto()" class="example-form">
                 <mat-form-field class="">
-                    <mat-label>Fecha Entrada</mat-label>
+                    <mat-label>Fecha Venta</mat-label>
                     <input matInput [matDatepicker]="picker3" [value]="date.value">
                     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                     <mat-datepicker #picker3></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="inputext">
+                    <mat-label>Trabajador</mat-label>
+                    <mat-select name="trabajador" required>
+                        <mat-option *ngFor="let food of foods" [value]="food.viewValue" >
+                            {{food.viewValue}}
+                        </mat-option>
+                    </mat-select> 
                 </mat-form-field>
                                         
                 <table class="example-full-width" cellspacing="0">
@@ -18,7 +27,7 @@
                         <td>
                             <mat-form-field class="corto">
                                 <mat-label>Codigo</mat-label>
-                                <input type="text" [(ngModel)]="producto.codigo" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl"
+                                <input type="text" [(ngModel)]="venta.codigo" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl"
                                     [matAutocomplete]="auto" required>
                                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                                     <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
@@ -31,14 +40,14 @@
                         <td>
                             <mat-form-field class="example-full-width">
                                 <mat-label>Descripcion</mat-label>
-                                <input matInput id="newAttributeDesc" name="descripcion" #descripcion="ngModel" [(ngModel)]="producto.descripcion" placeholder="Ex. kg" required>
+                                <input matInput id="newAttributeDesc" name="descripcion" #descripcion="ngModel" [(ngModel)]="venta.descripcion" placeholder="Ex. kg" required>
                             </mat-form-field>                            
                             <small *ngIf="!descripcion.valid && descripcion.touched">La descripcion no es valida!!</small>
                         </td>
                         <td>
                             <mat-form-field class="mediano">                                
                                 <mat-label>Unidad Medida</mat-label>
-                                <mat-select name="unidad_medida" [(ngModel)]="producto.unidad_medida" required>
+                                <mat-select name="unidad_medida" [(ngModel)]="venta.unidad_medida" required>
                                     <mat-option *ngFor="let food of foods" [value]="food.viewValue" >
                                         {{food.viewValue}}
                                     </mat-option>
@@ -48,16 +57,23 @@
                         <td>
                             <mat-form-field class="corto">
                                 <mat-label>Cantidad</mat-label>
-                                <input matInput id="cantidad" #cantidad="ngModel" [(ngModel)]="producto.cantidad" name="cantidad" placeholder="Ex. 0.00" required pattern="[0-9.]+">
+                                <input matInput id="cantidad" #cantidad="ngModel" [(ngModel)]="venta.cantidad" name="cantidad" placeholder="Ex. 0.00" required pattern="[0-9.]+">
                             </mat-form-field>
                             <small *ngIf="!cantidad.valid && cantidad.touched">La Cantidad no es valida!!</small>
                         </td>
                         <td>
                             <mat-form-field class="corto">
                                 <mat-label>Precio</mat-label>
-                                <input matInput id="newAttributePrecio" #precio="ngModel" [(ngModel)]="producto.precio" name="precio" placeholder="Ex. 0.00" value="" required pattern="[0-9.]+">
+                                <input matInput id="newAttributePrecio" #precio="ngModel" [(ngModel)]="venta.precio" name="precio" placeholder="Ex. 0.00" value="" required pattern="[0-9.]+">
                             </mat-form-field>
                             <small *ngIf="!precio.valid && precio.touched">El Precio no es valida!!</small>
+                        </td>
+                        <td>
+                            <mat-form-field class="corto">
+                                <mat-label>Comision</mat-label>
+                                <input matInput id="newAttributePrecio" #comision="ngModel" [(ngModel)]="venta.comision" name="comision" placeholder="Ex. 0.00" value="" required pattern="[0-9.]+">
+                            </mat-form-field>
+                            <small *ngIf="!precio.valid && precio.touched">La Comision no es valida!!</small>
                         </td>
                         <td>
                             <button type="submit" [disabled]="productForm.invalid" mat-mini-fab color="primary" aria-label="Example icon button with a add icon">
@@ -69,7 +85,7 @@
                 
             </form>
         </div>
-        <h3 class="h3">Lista de Productos a Entrar</h3>
+        <h3 class="h3">Lista de Productos a Vender</h3>
         <div class="example-container mat-elevation-z8">
             <mat-table #table [dataSource]="transactions" myTable class="table">
               <!-- codigo Column -->
@@ -103,6 +119,12 @@
                 <td mat-footer-cell *matFooterCellDef>  </td>
               </ng-container>
               <!-- Importe Column -->
+              <ng-container matColumnDef="comision">
+                <th mat-header-cell *matHeaderCellDef> Comision </th>
+                <td mat-cell *matCellDef="let transaction"> {{transaction.comision | currency}} </td>
+                <td mat-footer-cell *matFooterCellDef> {{getTotalCom() | currency}} </td>
+              </ng-container>
+              <!-- Importe Column -->
               <ng-container matColumnDef="importe">
                 <th mat-header-cell *matHeaderCellDef> Importe </th>
                 <td mat-cell *matCellDef="let transaction"> {{transaction.importe | currency}} </td>
@@ -132,3 +154,4 @@
 </mat-tab-group>
 
   
+

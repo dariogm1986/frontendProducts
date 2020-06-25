@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-//import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {Product} from '../../models/product';
+import {Venta} from '../../models/venta';
 import { MatTable, MatTableModule } from '@angular/material/table';
 
 interface Food {
@@ -18,17 +18,16 @@ export interface Transaction {
   unidad_medida:string;
   cantidad:number;
   cost: number;
+  comision:number;
   importe:number;
 }
 
-
-
 @Component({
-  selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  selector: 'app-venta',
+  templateUrl: './venta.component.html',
+  styleUrls: ['./venta.component.css']
 })
-export class ProductComponent implements OnInit {
+export class VentaComponent implements OnInit {
 
   @ViewChild(MatTable) table: MatTable<any>;
   //@ViewChild('myTable') myTable: MatTableModule;
@@ -46,10 +45,8 @@ export class ProductComponent implements OnInit {
     {value: 'tacos-2', viewValue: 'Tacos'}
   ];
 
-  displayedColumns = ['codigo', 'descripcion', 'unidad_medida','cantidad','cost', 'importe', 'accion'];
-  transactions: Product[] = [
-    
-  ];
+  displayedColumns = ['codigo', 'descripcion', 'unidad_medida','cantidad','cost', 'comision','importe', 'accion'];
+  transactions: Venta[] = [];
   /*transactions: Transaction[] = [
     {codigo: 'Beach ball', descripcion:'desc', unidad_medida:'unidad', cantidad:4, cost: 4, importe:4},
     {codigo: 'Towel', descripcion:'desc', unidad_medida:'unidad', cantidad:4, cost: 5, importe:4},
@@ -66,13 +63,14 @@ export class ProductComponent implements OnInit {
   precio:Number;
   */
   producto: Product;
+  venta: Venta;
   productos: Product[];
 
   constructor(
     
   ) { 
     this.producto = new Product('','','','',null,null,null);
-    //this.productos = [];
+    this.venta = new Venta('','','','',null,null,null,null);
   }
 
   ngOnInit(): void {
@@ -94,12 +92,18 @@ export class ProductComponent implements OnInit {
     return this.transactions.map(t => t.importe).reduce((acc, value) => Number(acc) + Number(value), 0);
   }
 
+  /** Gets the total cost of all transactions. */
+  getTotalCom() {
+    return this.transactions.map(t => t.comision).reduce((acc, value) => Number(acc) + Number(value), 0);
+  }
+
   agregarProducto(){
-    let importe = Number(this.producto.cantidad)*Number(this.producto.precio);
-    let product = new Product(this.producto.id,this.producto.codigo,this.producto.descripcion,this.producto.unidad_medida,this.producto.cantidad,this.producto.precio,importe);
-    this.transactions.push(product);
+    let importe = Number(this.venta.cantidad)*Number(this.venta.precio);
+    let comision = Number(this.venta.cantidad)*Number(this.venta.comision);
+    let venta = new Venta(this.venta.id,this.venta.codigo,this.venta.descripcion,this.venta.unidad_medida,this.venta.cantidad,this.venta.precio,comision,importe);
+    this.transactions.push(venta);
     this.table.renderRows();
-    this.producto = new Product('','','','',null,null,null);
+    this.venta = new Venta('','','','',null,null,null,null);
     //console.log(this.transactions);
     //console.log(this.transactions);
   }
@@ -110,5 +114,4 @@ export class ProductComponent implements OnInit {
     //console.log(fila);
   }
 
-  
 }

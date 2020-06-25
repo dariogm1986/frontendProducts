@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-//import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {Product} from '../../models/product';
 import { MatTable, MatTableModule } from '@angular/material/table';
@@ -21,14 +20,12 @@ export interface Transaction {
   importe:number;
 }
 
-
-
 @Component({
-  selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  selector: 'app-salida',
+  templateUrl: './salida.component.html',
+  styleUrls: ['./salida.component.css']
 })
-export class ProductComponent implements OnInit {
+export class SalidaComponent implements OnInit {
 
   @ViewChild(MatTable) table: MatTable<any>;
   //@ViewChild('myTable') myTable: MatTableModule;
@@ -46,7 +43,7 @@ export class ProductComponent implements OnInit {
     {value: 'tacos-2', viewValue: 'Tacos'}
   ];
 
-  displayedColumns = ['codigo', 'descripcion', 'unidad_medida','cantidad','cost', 'importe', 'accion'];
+  displayedColumns = ['codigo', 'descripcion', 'unidad_medida','cantidad', 'accion'];
   transactions: Product[] = [
     
   ];
@@ -110,5 +107,4 @@ export class ProductComponent implements OnInit {
     //console.log(fila);
   }
 
-  
 }
