@@ -1,1 +1,43 @@
-<p>cierre works!</p>
+<mat-tab-group>
+    <mat-tab label="Lista"> 
+        Content 1 
+    </mat-tab>
+    <mat-tab label="Insertar">
+        <div class="contenttab">
+            <h3 class="h3">Cierre Diario</h3>
+            <form #productForm="ngForm" (ngSubmit)="agregarProducto()" class="example-form">
+                                                        
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                        
+                        <td>
+                            <mat-form-field class="">
+                                <mat-label>Fecha</mat-label>
+                                <input matInput [matDatepicker]="picker3" [value]="date.value" >
+                                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                                <mat-datepicker #picker3></mat-datepicker>
+                            </mat-form-field>
+                        </td>
+                        
+                        
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="submit" [disabled]="productForm.invalid" mat-raised-button color="primary" class="guardar">
+                                Hacer Cierre
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+                
+            </form>
+        </div>
+        
+                            
+    </mat-tab>
+</mat-tab-group>
+
+  
+
+
+

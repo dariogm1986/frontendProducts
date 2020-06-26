@@ -1,1 +1,40 @@
-<p>unidad-medida works!</p>
+<mat-tab-group>
+    <mat-tab label="Lista"> 
+        Content 1 
+    </mat-tab>
+    <mat-tab label="Insertar">
+        <div class="contenttab">
+            <h3 class="h3">Entrar Unidad de Medida</h3>
+            <form #productForm="ngForm" (ngSubmit)="agregarProducto()" class="example-form">
+                                                        
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                        
+                        <td>
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Unidad de Medida</mat-label>
+                                <input matInput id="unidad_medida" name="unidad_medida" #unidad_medida="ngModel" [(ngModel)]="unidadmedida.unidad_medida" placeholder="Ex. kg" required>
+                            </mat-form-field>                            
+                            <small *ngIf="!unidad_medida.valid && unidad_medida.touched">La Unidad de Medida no es valida!!</small>
+                        </td>
+                        
+                        
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="submit" [disabled]="productForm.invalid" mat-raised-button color="primary" class="guardar">
+                                Guardar
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+                
+            </form>
+        </div>
+        
+                            
+    </mat-tab>
+</mat-tab-group>
+
+  
+
